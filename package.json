@@ -1,0 +1,28 @@
+{
+  "name": "rds-command-gen",
+  "version": "1.0.0",
+  "description": "RDS command generator from Excel files for RDS Pro.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lbcard/rds-command-gen.git"
+  },
+  "keywords": [
+    "rds",
+    "excel",
+    "radio",
+    "command"
+  ],
+  "author": "Lawrence Card",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lbcard/rds-command-gen/issues"
+  },
+  "homepage": "https://github.com/lbcard/rds-command-gen#readme",
+  "dependencies": {
+    "read-excel-file": "^4.0.6"
+  }
+}
