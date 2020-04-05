@@ -104,3 +104,6 @@ dist
 .tern-port
 
 example_rds_commands.txt
+local_folder/
+local_folder/*
+.DS_Store

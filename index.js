@@ -8,9 +8,9 @@ const schema = {
     type: String,
     required: true,
   },
-  days: {
+  DAYS: {
     prop: "days",
-    type: Number,
+    type: String,
     required: true,
   },
   TIMES: {
@@ -29,7 +29,7 @@ const scheduleIn = "./input/rds_template.xlsx";
 const scheduleOut = "./output/rds_schedule.txt";
 
 async function genCommands(inFile) {
-  console.log("genCommands!!");
+  console.log("Generated Commands");
   // need to return a promise here!
   try {
     const gennedCommands = await readXlsxFile(inFile, { schema }).then(
@@ -42,9 +42,9 @@ async function genCommands(inFile) {
 
         let validRowCount = 0;
         const commandsList = rows.map((r) => {
-          if (r && r.show) {
-            // console.log(r);
+          // r is the row
 
+          if (r && r.show && validRowCount <= 48) {
             const showName = r.show;
             const times = r.times;
             // const timesFormatted = times.replace(/, /gi, "");
@@ -58,31 +58,26 @@ async function genCommands(inFile) {
               `*S${validRowCount + 1}P=${genre}\n` +
               `*S${validRowCount + 1}T=${times}\n` +
               `*S${validRowCount + 1}D=${days}\n`;
-            // console.log(commandEntry);
-            // commandsList.concat(commandEntry);
 
             validRowCount++;
             return commandEntry;
           }
           return;
         }); // end map
-        // console.log(commandsList);
+
         return commandsList;
       }
     ); // end readfile
 
     return gennedCommands;
   } catch (e) {
-    console.log("error occured in gencommands");
+    console.log("error occured in gencommands function");
     console.log(e);
   }
 }
 
 function end(createdCommands, outFile) {
   try {
-    console.log("Running End");
-    // console.log(createdCommands);
-
     const sendCommand = "*SEN=1\n*SEN\n";
 
     const closeCommands = createdCommands.concat(sendCommand);
@@ -96,13 +91,13 @@ function end(createdCommands, outFile) {
       console.log("Commands Saved!");
     });
   } catch (e) {
-    console.log("error occured in end");
+    console.log("error occured in end function");
+    console.log(e);
   }
 }
 
 async function init() {
   const commands = await genCommands(scheduleIn);
-  // console.log(commands);
 
   end(commands, scheduleOut);
 }
