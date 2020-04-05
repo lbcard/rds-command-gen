@@ -6,86 +6,103 @@ const schema = {
   SHOW: {
     prop: "show",
     type: String,
-    required: true
+    required: true,
   },
   days: {
     prop: "days",
     type: Number,
-    required: true
+    required: true,
   },
   TIMES: {
     prop: "times",
     type: String,
-    required: true
+    required: true,
   },
   GENRE: {
     prop: "genre",
-    type: Number
-  }
+    type: Number,
+  },
 };
 
 // import xlsx
-const scheduleIn = "./input/rds_template.xlsx"; // "./input/rds_schedule.xlsx";
+const scheduleIn = "./input/rds_template.xlsx";
 const scheduleOut = "./output/rds_schedule.txt";
 
-function genCommands(inFile) {
+async function genCommands(inFile) {
   console.log("genCommands!!");
   // need to return a promise here!
-  return new Promise((resolve, reject) => {
-    const commandsList = "";
-    readXlsxFile(inFile, { schema }).then(({ rows, errors }) => {
-      // `rows` is an array of rows
-      // each row being an array of cells.
+  try {
+    const gennedCommands = await readXlsxFile(inFile, { schema }).then(
+      ({ rows, errors }) => {
+        // `rows` is an array of rows
+        // each row being an array of cells.
 
-      // `errors` have shape `{ row, column, error, value }`.
-      errors.length === 0;
+        // `errors` have shape `{ row, column, error, value }`.
+        errors.length === 0;
 
-      for (i = 0; i < 50; i++) {
-        if (rows[i] && rows[i].show) {
-          // console.log(rows[i]);
+        let validRowCount = 0;
+        const commandsList = rows.map((r) => {
+          if (r && r.show) {
+            // console.log(r);
 
-          const showName = rows[i].show;
-          const times = rows[i].times;
-          // const timesFormatted = times.replace(/, /gi, "");
-          const days = rows[i].days;
-          const genre = rows[i].genre;
+            const showName = r.show;
+            const times = r.times;
+            // const timesFormatted = times.replace(/, /gi, "");
+            const days = r.days;
+            const genre = r.genre;
 
-          const showCode = showName === "National" ? "PTYN" : "RT1";
+            const showCode = showName === "National" ? "PTYN" : "RT1";
 
-          const commandEntry = `
-                                        *S${i + 1}C=${showCode}=${showName}\n
-                                        *S${i + 1}P=${genre}\n
-                                        *S${i + 1}T=${times}\n
-                                        *S${i + 1}D=${days}\n
-                                    `;
-          // console.log(commandEntry);
-          commandsList.concat(commandEntry);
-        }
+            const commandEntry =
+              `*S${validRowCount + 1}C=${showCode}=${showName}\n` +
+              `*S${validRowCount + 1}P=${genre}\n` +
+              `*S${validRowCount + 1}T=${times}\n` +
+              `*S${validRowCount + 1}D=${days}\n`;
+            // console.log(commandEntry);
+            // commandsList.concat(commandEntry);
+
+            validRowCount++;
+            return commandEntry;
+          }
+          return;
+        }); // end map
+        // console.log(commandsList);
+        return commandsList;
       }
-      console.log("commandsList", commandsList);
-      return commandsList;
-    });
+    ); // end readfile
 
-    resolve(commandsList);
-  });
+    return gennedCommands;
+  } catch (e) {
+    console.log("error occured in gencommands");
+    console.log(e);
+  }
 }
 
 function end(createdCommands, outFile) {
-  console.log("Running End");
-  console.log(createdCommands);
-  const sendCommand = "SEN=1\n*SEN\n";
+  try {
+    console.log("Running End");
+    // console.log(createdCommands);
 
-  createdCommands.concat(sendCommand);
+    const sendCommand = "*SEN=1\n*SEN\n";
 
-  fs.writeFile(outFile, createdCommands, function(err) {
-    if (err) throw err;
-    console.log("Commands Saved!");
-  });
+    const closeCommands = createdCommands.concat(sendCommand);
+
+    const stringCommands = closeCommands.toString();
+
+    const stringCommandsClean = stringCommands.replace(/,/g, "");
+
+    fs.writeFile(outFile, stringCommandsClean, function (err) {
+      if (err) throw err;
+      console.log("Commands Saved!");
+    });
+  } catch (e) {
+    console.log("error occured in end");
+  }
 }
 
 async function init() {
   const commands = await genCommands(scheduleIn);
-  console.log(commands);
+  // console.log(commands);
 
   end(commands, scheduleOut);
 }
