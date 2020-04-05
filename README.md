@@ -12,7 +12,7 @@ This is to help make keeping RDS schedules uptodate easier so somebody non-techn
 
 ## Operation Instructions
 
-- Edit the template xlsx file in the input folder. There is a guide
+- Edit the template xlsx file in the input folder. There is a guide within it (in green area) for formatting and genre codes etc....
 - cd into the directory of the repo
 - run 'node index.js'
 
