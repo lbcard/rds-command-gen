@@ -62,6 +62,8 @@ async function genCommands(inFile, msgFile) {
                 ? `0${validRowCount + 1}`
                 : validRowCount + 1;
 
+            const genreFormat = genre <= 9 ? `0${genre}` : genre;
+
             // the command max length is 35 chars. About 9 to 10 are taken up already.
             // therefore if over 25 then write it to a message instead and recall the message.
             // like RT1 text, messages can be 64 chars but command still has to be under 35
@@ -91,7 +93,7 @@ async function genCommands(inFile, msgFile) {
 
             const commandEntry =
               `*S${entryNumb}C=${showCode}=${showName}\n` +
-              `*S${entryNumb}P=${genre}\n` +
+              `*S${entryNumb}P=${genreFormat}\n` +
               `*S${entryNumb}T=${encodedTimes}\n` +
               `*S${entryNumb}D=${days}\n`;
 
