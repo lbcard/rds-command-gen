@@ -49,3 +49,7 @@ The numbers start at 32 as upto 31 is taken by RDS standard PTY codes.
 - Add stricter parsing and error handling on the field inputs
 - Add telnet client and option to auto send to the box
 - Add 'watch' on a folder (probably within the bat file) for fully automated workflow (i.e. user just drops xlsx into that folder). This could be setup as a Dropbox or GDrive folder for remote triggering.
+
+## Current Bugs
+
+- It generates (what I believe to be) the correct commands but I have found when pasting them straight into HyperTerm or PuTTY, there is sometimes a fail response back from the encoder. My theory is that it is sending them too quickly for the encoder to acknowledge them correctly as sending commands one by one or in a short block often works. Therefore I am going to build in a function that auto sends via telnet which a short interval between commands and logs the response.
