@@ -57,6 +57,11 @@ async function genCommands(inFile, msgFile) {
               };
             }
 
+            const entryNumb =
+              validRowCount + 1 <= 9
+                ? `0${validRowCount + 1}`
+                : validRowCount + 1;
+
             // the command max length is 35 chars. About 9 to 10 are taken up already.
             // therefore if over 25 then write it to a message instead and recall the message.
             // like RT1 text, messages can be 64 chars but command still has to be under 35
@@ -68,7 +73,7 @@ async function genCommands(inFile, msgFile) {
                 originalShowName = originalShowName.substring(0, 61) + "...";
               }
 
-              showName = `RT2MSG=${validRowCount + 1}`;
+              showName = `RT2MSG=${entryNumb}`;
 
               // add to message file
               fs.appendFileSync(
@@ -85,10 +90,10 @@ async function genCommands(inFile, msgFile) {
             const encodedTimes = times.replace(/,/g, "bzTaEq");
 
             const commandEntry =
-              `*S${validRowCount + 1}C=${showCode}=${showName}\n` +
-              `*S${validRowCount + 1}P=${genre}\n` +
-              `*S${validRowCount + 1}T=${encodedTimes}\n` +
-              `*S${validRowCount + 1}D=${days}\n`;
+              `*S${entryNumb}C=${showCode}=${showName}\n` +
+              `*S${entryNumb}P=${genre}\n` +
+              `*S${entryNumb}T=${encodedTimes}\n` +
+              `*S${entryNumb}D=${days}\n`;
 
             validRowCount++;
 
