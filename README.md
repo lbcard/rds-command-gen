@@ -1,3 +1,5 @@
+# **_STILL IN TESTING_**
+
 # rds-command-gen
 
 Command generator for RDS schedules for the Audessence RDS Pro 2 encoder based on Excel file input. Designed for use with RDS Pro telnet command line and RDS PRO GUI (for RT2 Messages). This may work for other RDS encoders if they take similar commands. Please check your own device ofr compatibility.
