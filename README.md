@@ -18,6 +18,8 @@ This script currently doesn't auto send the commands via telnet. This is somethi
 - cd into the directory of the repo
 - run 'node index.js'
 
+(I'll make this a proper executable too eventually)
+
 Also, don't use "bzTaEq" as a string within the show name on the xlsx. This string combination is used to encode commas between times to protect them temporarily. Unlikely but just a heads up!
 
 ## Important Notes
