@@ -13,9 +13,11 @@ const sendViaTelnet = async (configs, commandsFile, responseFile) => {
     console: false,
   });
 
+  const telnetConfigs = JSON.parse(configs);
+
   // setup telnet connection
   try {
-    await connection.connect(configs);
+    await connection.connect(telnetConfigs);
   } catch (error) {
     // handle the throw (timeout)
     console.log(new Error(`error connecting to device via Telnet ${error}`));
