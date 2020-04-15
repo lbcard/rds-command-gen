@@ -42,6 +42,10 @@ This follows the format of:
 [{PTYN: {"32": "myCode", "33": "anotherCode"}}]
 The numbers start at 32 as upto 31 is taken by RDS standard PTY codes.
 
+### Telnet Configs
+
+If no shellprompt is required, change that entry to '"negotiationMandatory": false'.
+
 ## ToDo
 
 - Create an install bat file

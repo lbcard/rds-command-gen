@@ -25,25 +25,25 @@ const sendViaTelnet = async (configs, commandsFile, responseFile) => {
 
   // send command, write response and command to file, delay of 250ms
   // delay is to give the encoder chance to acknowledge the command
-  readInterface.on("line", function (line) {
-    setTimeout(async function () {
-      console.log(line);
+  readInterface.on("line", async function (line) {
+    // setTimeout(async function () {
+    console.log(line);
 
-      const trimmedLine = line.trim();
-      const res = await connection.exec(trimmedLine);
+    const trimmedLine = line.trim();
+    const res = await connection.exec(trimmedLine);
 
-      // let res = await connection.exec("uptime");
-      // console.log("async result:", res);
+    // let res = await connection.exec("uptime");
+    // console.log("async result:", res);
 
-      fs.appendFileSync(
-        responseFile,
-        `Command Sent: ${trimmedLine}, Telnet Response: ${res}\n`,
-        function (err) {
-          if (err) throw err;
-          console.log("Telnet response written");
-        }
-      );
-    }, 250);
+    fs.appendFileSync(
+      responseFile,
+      `Command Sent: ${trimmedLine}, Telnet Response: ${res}\n`,
+      function (err) {
+        if (err) throw err;
+        console.log("Telnet response written");
+      }
+    );
+    // }, 250);
   });
 };
 
