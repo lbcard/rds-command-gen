@@ -44,7 +44,7 @@ The numbers start at 32 as upto 31 is taken by RDS standard PTY codes.
 
 ### Telnet Configs
 
-If no shellprompt is required, change that entry to '"negotiationMandatory": false'.
+If no shellprompt is required, change that entry to '"negotiationMandatory": false', otherwise its a regex for "shellPrompt": "/ # ",. Docs for the client are: https://github.com/mkozjak/node-telnet-client#readme
 
 ## ToDo
 
