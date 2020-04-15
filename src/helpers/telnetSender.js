@@ -13,7 +13,7 @@ const sendViaTelnet = async (configs, commandsFile, responseFile) => {
     console: false,
   });
 
-  const telnetConfigs = JSON.parse(configs);
+  const telnetConfigs = configs[0];
 
   // setup telnet connection
   try {
