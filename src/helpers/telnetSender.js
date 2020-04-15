@@ -15,19 +15,19 @@ const sendViaTelnet = async (configs, commandsFile, responseFile) => {
     console: false,
   });
 
+  // setup telnet connection
+  try {
+    const connectRes = await connection.connect(telnetConfigs);
+    console.log(`telnet connection successful, ${connectRes}`);
+  } catch (error) {
+    // handle the throw (timeout)
+    console.log(new Error(`error connecting to device via Telnet ${error}`));
+  }
+
   // send command, write response and command to file, delay of 250ms
   // delay is to give the encoder chance to acknowledge the command
   readInterface.on("line", async function (line) {
     // setTimeout(async function () {
-
-    // setup telnet connection
-    try {
-      const connectRes = await connection.connect(telnetConfigs);
-      console.log(`telnet connection successful, ${connectRes}`);
-    } catch (error) {
-      // handle the throw (timeout)
-      console.log(new Error(`error connecting to device via Telnet ${error}`));
-    }
 
     const trimmedLine = line.trim();
     const res = await connection.exec(trimmedLine);
