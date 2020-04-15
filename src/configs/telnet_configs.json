@@ -3,6 +3,7 @@
     "host": "127.0.0.1",
     "port": 23,
     "negotiationMandatory": false,
-    "timeout": 1500
+    "timeout": 5000,
+    "execTimeout": 5000
   }
 ]
