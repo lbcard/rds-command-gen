@@ -18,6 +18,7 @@ const sendViaTelnet = async (configs, commandsFile, responseFile) => {
   // setup telnet connection
   try {
     await connection.connect(telnetConfigs);
+    console.log("telnet connection successful");
   } catch (error) {
     // handle the throw (timeout)
     console.log(new Error(`error connecting to device via Telnet ${error}`));
@@ -30,6 +31,7 @@ const sendViaTelnet = async (configs, commandsFile, responseFile) => {
     console.log(line);
 
     const trimmedLine = line.trim();
+    console.log("trimmed line =", trimmedLine);
     const res = await connection.exec(trimmedLine);
 
     // let res = await connection.exec("uptime");
