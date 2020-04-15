@@ -17,8 +17,8 @@ const sendViaTelnet = async (configs, commandsFile, responseFile) => {
 
   // setup telnet connection
   try {
-    await connection.connect(telnetConfigs);
-    console.log("telnet connection successful");
+    const connectRes = await connection.connect(telnetConfigs);
+    console.log(`telnet connection successful, ${connectRes}`);
   } catch (error) {
     // handle the throw (timeout)
     console.log(new Error(`error connecting to device via Telnet ${error}`));
